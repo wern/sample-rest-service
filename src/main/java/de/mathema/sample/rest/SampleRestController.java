@@ -1,5 +1,7 @@
 package de.mathema.sample.rest;
 
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +14,20 @@ public class SampleRestController {
 
     private Date notHealthyUntil = new Date(0);
     private Date notReadyUntil = new Date(0);
+    private String hostname;
+
+    public SampleRestController(){
+        try {
+            hostname = Inet4Address.getLocalHost().getHostName();
+        } catch(UnknownHostException ex){
+            hostname = "UnknownHost";
+        }
+    }
 
     @GetMapping("/sampleservice")
     public String sayHello(@RequestParam(defaultValue = "John", name="to") String toWhom){
-        if(Math.random() > 0.3) {
-            return "Hello " + toWhom + "!";
+        if(Math.random() > 0.1) {
+            return "Hello " + toWhom + " from "+ hostname +" :)";
         } else {
             throw new RuntimeException("Something really bad happend!!!!");
         }
