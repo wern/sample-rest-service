@@ -9,6 +9,10 @@ public class SampleRestController {
     
     @GetMapping("/sampleservice")
     public String sayHello(@RequestParam(defaultValue = "John", name="to") String toWhom){
-        return "Hello " + toWhom + "!";
+        if(Math.random() > 0.3) {
+            return "Hello " + toWhom + "!";
+        } else {
+            throw new RuntimeException("Something really bad happend!!!!");
+        }
     }
 }
