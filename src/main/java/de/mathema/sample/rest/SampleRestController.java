@@ -15,4 +15,14 @@ public class SampleRestController {
             throw new RuntimeException("Something really bad happend!!!!");
         }
     }
+
+    @GetMapping("/check/ready")
+    public String ready(){
+        return "Ok!";
+    }
+
+    @GetMapping("/check/health")
+    public String health(){
+        return "Ok!";
+    }
 }
