@@ -1,0 +1,8 @@
+version: '3'
+services:
+  sample-time-service:
+    image: werneb/sample-time-service
+  sample-rest-service:
+    image: werneb/sample-rest-service
+    ports:
+      - "8080:8080"

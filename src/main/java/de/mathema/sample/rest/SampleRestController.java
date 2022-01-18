@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class SampleRestController {
@@ -31,6 +32,11 @@ public class SampleRestController {
         } else {
             throw new RuntimeException("Something really bad happend!!!!");
         }
+    }
+
+    @GetMapping("/sampletimeservice")
+    public String sayHelloWithTime(@RequestParam(defaultValue = "John", name="to") String toWhom){
+        return "Hello " + toWhom + " from "+ hostname +"! It's " + new RestTemplate().getForEntity("http://sample-time-service:8080/now", String.class).getBody() + ". :)";
     }
 
     @GetMapping("/check/ready")

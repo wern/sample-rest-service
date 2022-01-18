@@ -1,0 +1,70 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sample-rest-service
+  labels:
+    app: sample-rest-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-rest-service
+  template:
+    metadata:
+      labels:
+        app: sample-rest-service
+    spec:
+      containers:
+        - name: sample-rest-service
+          image: werneb/sample-rest-service:latest
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sample-time-service
+  labels:
+    app: sample-time-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-time-service
+  template:
+    metadata:
+      labels:
+        app: sample-time-service
+    spec:
+      containers:
+        - name: sample-time-service
+          image: werneb/sample-time-service:latest
+          ports:
+          - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sample-rest-service
+  labels:
+    app: sample-rest-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: sample-rest-service
+  type: NodePort
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sample-time-service
+  labels:
+    app: sample-time-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: sample-time-service
