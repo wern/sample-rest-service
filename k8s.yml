@@ -4,6 +4,8 @@ metadata:
   name: sample-rest-service
   labels:
     app: sample-rest-service
+    version: v1
+    part-of: container-playground
 spec:
   replicas: 2
   selector:
@@ -13,10 +15,14 @@ spec:
     metadata:
       labels:
         app: sample-rest-service
+        version: v1
+        part-of: container-playground
     spec:
       containers:
         - name: sample-rest-service
           image: werneb/sample-rest-service:latest
+          ports:
+          - containerPort: 8080
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -24,6 +30,8 @@ metadata:
   name: sample-time-service
   labels:
     app: sample-time-service
+    version: v1
+    part-of: container-playground
 spec:
   replicas: 2
   selector:
@@ -33,6 +41,8 @@ spec:
     metadata:
       labels:
         app: sample-time-service
+        version: v1
+        part-of: container-playground
     spec:
       containers:
         - name: sample-time-service
@@ -46,14 +56,16 @@ metadata:
   name: sample-rest-service
   labels:
     app: sample-rest-service
+    service: sample-rest-service
+    version: v1
+    part-of: container-playground
 spec:
   ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
+    - port: 8080
+      name: http
   selector:
     app: sample-rest-service
-  type: NodePort
+    version: v1
 ---
 kind: Service
 apiVersion: v1
@@ -61,10 +73,14 @@ metadata:
   name: sample-time-service
   labels:
     app: sample-time-service
+    service: sample-time-service
+    version: v1
+    part-of: container-playground
 spec:
   ports:
     - protocol: TCP
       port: 8080
-      targetPort: 8080
+      name: http
   selector:
     app: sample-time-service
+    version: v1
