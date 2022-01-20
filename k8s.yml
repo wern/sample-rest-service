@@ -21,8 +21,16 @@ spec:
       containers:
         - name: sample-rest-service
           image: werneb/sample-rest-service:latest
+          env:
+            - name: JAEGER_ENDPOINT
+              value: http://jaeger-collector.istio-system.svc:14268/api/traces
+            - name: JAEGER_PROPAGATION
+              value: b3
+            - name: JAEGER_REPORTER_LOG_SPANS
+              value: "true"
           ports:
           - containerPort: 8080
+          imagePullPolicy: Always
 ---
 kind: Deployment
 apiVersion: apps/v1
@@ -47,8 +55,16 @@ spec:
       containers:
         - name: sample-time-service
           image: werneb/sample-time-service:latest
+          env:
+            - name: JAEGER_ENDPOINT
+              value: http://jaeger-collector.istio-system.svc:14268/api/traces
+            - name: JAEGER_PROPAGATION
+              value: b3
+            - name: JAEGER_REPORTER_LOG_SPANS
+              value: "true"
           ports:
           - containerPort: 8080
+          imagePullPolicy: Always
 ---
 kind: Service
 apiVersion: v1
