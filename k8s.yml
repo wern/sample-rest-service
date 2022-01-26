@@ -20,8 +20,9 @@ spec:
     spec:
       containers:
         - name: sample-rest-service
-          image: werneb/sample-rest-service:latest
+          image: werneb/sample-rest-service:1
           env:
+            # Environment variables are ignored by spring jaeger integration! :(
             - name: JAEGER_ENDPOINT
               value: http://jaeger-collector.istio-system.svc:14268/api/traces
             - name: JAEGER_PROPAGATION
@@ -54,8 +55,9 @@ spec:
     spec:
       containers:
         - name: sample-time-service
-          image: werneb/sample-time-service:latest
+          image: werneb/sample-time-service:1
           env:
+            # Environment variables are ignored by spring jaeger integration! :(
             - name: JAEGER_ENDPOINT
               value: http://jaeger-collector.istio-system.svc:14268/api/traces
             - name: JAEGER_PROPAGATION
